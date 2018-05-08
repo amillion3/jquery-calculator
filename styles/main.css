@@ -1,0 +1,43 @@
+* {
+  font-family: 'Share Tech Mono', monospace;
+}
+
+body {
+  background-color: aliceblue;
+}
+
+.fluid-container {
+
+}
+
+.col-sm-4 {
+  border: 5px solid black;
+}
+
+button {
+  padding: 15px 15px;
+}
+
+.btn-number {
+  font-size: 36px;
+}
+
+.btn-math {
+  font-size: 36px;
+  background-color: lightblue;
+}
+
+.btn-clear {
+  font-size: 36px;
+  background-color: pink;
+  margin-top: 10px;
+}
+
+#div-current-total,
+#div-running-display {
+  font-size: 48px;
+  background-color: white;
+  border: 1px solid black;
+  margin-bottom: 10px;
+  padding: 10px 10px;
+}

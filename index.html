@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>jQuery Calculator</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css?family=Share+Tech+Mono" rel="stylesheet">
+  <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+  <div class='fluid-container text-center'>
+    <div class='row col-sm-offset-4 col-sm-4'>
+      <div class='row'>
+        <div id='div-current-total' class='col-sm-12'>current total</div>
+      </div> <!-- End Current Total -->
+      <div class='row'>
+        <div id='div-running-display' class='col-sm-12'>running display</div>
+      </div> <!-- End Running Display -->
+      <div class='row'>
+        <button class='btn-number col-sm-3' id='1'>1</button>
+        <button class='btn-number col-sm-3' id='2'>2</button>
+        <button class='btn-number col-sm-3' id='3'>3</button>
+        <button class='btn-math col-sm-3' id='math-plus'>+</button>
+      </div> <!-- End 1 2 3 +  -->
+      <div class='row'>
+        <button class='btn-number col-sm-3' id='4'>4</button>
+        <button class='btn-number col-sm-3' id='5'>5</button>
+        <button class='btn-number col-sm-3' id='6'>6</button>
+        <button class='btn-math col-sm-3' id='math-minus'>-</button>
+      </div> <!-- End 4 5 6 -  -->
+      <div class='row'>
+        <button class='btn-number col-sm-3' id='7'>7</button>
+        <button class='btn-number col-sm-3' id='8'>8</button>
+        <button class='btn-number col-sm-3' id='9'>9</button>
+        <button class='btn-math col-sm-3' id='math-multiply'>*</button>
+      </div> <!-- End 7 8 9 *  -->
+      <div class='row'>
+        <button class='btn-number col-sm-3' id='0'>0</button>
+        <button class='btn-math col-sm-3' id='math-decimal'>.</button>
+        <button class='btn-math col-sm-3' id='math-positive-negative'>+/-</button>
+        <button class='btn-math col-sm-3' id='math-divide'>/</button>
+      </div> <!-- End 0 . +- / -->
+      <div class='row' id='div-clear-buttons'>
+        <button class='btn-clear col-sm-6' id='clear-single'>Clear</button>
+        <button class='btn-clear col-sm-6' id='clear-all'>Clear All</button>
+      </div> <!-- ClearButtons -->
+    </div> <!-- End Calculator -->
+  </div>
+
+  <!-- End Current Total -->
+
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <script src="dist/app.js"></script>
+</body>
+</html>
