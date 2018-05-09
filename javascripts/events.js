@@ -1,31 +1,38 @@
+const dataGatekeeper = require('./dataGatekeeper');
+
 // Begin NUMBER functionality
 const clickedNumber = e => {
   const buttonClicked = e.target.id * 1;
+  dataGatekeeper.setNewNumber(buttonClicked);
 };
 
 // Begin MATH functionality
 const clickedMath = e => {
   const buttonClicked = e.target.id;
-  if (buttonClicked === 'math-plus') {
-
-  } else if (buttonClicked === 'math-minus') {
-
-  } else if (buttonClicked === 'math-multiply') {
-
+  if (dataGatekeeper.getOldNumber === 0) {
+    alert('You need to enter a number first.');
   } else {
+    let operator = '';
+    if (buttonClicked === 'math-plus') {
+      dataGatekeeper.setOperator('+');
+    } else if (buttonClicked === 'math-minus') {
+      dataGatekeeper.setOperator('-');
+    } else if (buttonClicked === 'math-multiply') {
+      dataGatekeeper.setOperator('*');
+    } else {
+      dataGatekeeper.setOperator('/');
+    }
+  } // end else to perform math
 
-  }
 };
 
 // Begin CLEAR functionality
 const clearSingle = () => {
 
 };
-
 const clearAll = () => {
 
 };
-
 const clickedClear = e => {
   const buttonClicked = e.target.id;
   if (buttonClicked === 'clear-single') {
@@ -33,6 +40,15 @@ const clickedClear = e => {
   } else {
     clearAll();
   }
+};
+
+const clickedEquals = e => {
+  const a = dataGatekeeper.getOldNumber();
+  const b = dataGatekeeper.getNewNumber();
+  const operator = dataGatekeeper.getOperator();
+  const calculatedTotal = dataGatekeeper.manipulateTotal(a, b, operator);
+  dataGatekeeper.setTotal(calculatedTotal);
+  return calculatedTotal;
 };
 
 const btnClicked = e => {
@@ -43,6 +59,8 @@ const btnClicked = e => {
     clickedMath(e);
   } else if ($(buttonClicked).hasClass('btn-clear')) {
     clickedClear(e);
+  } else if ($(buttonClicked).hasClass('btn-equals')) {
+    clickedEquals(e);
   }
 };
 
