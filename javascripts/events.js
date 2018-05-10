@@ -1,4 +1,5 @@
 const dataGatekeeper = require('./dataGatekeeper');
+const dom = require('./dom');
 
 // Begin NUMBER functionality
 const clickedNumber = e => {
@@ -59,6 +60,9 @@ const clickedEquals = e => {
 
 const btnClicked = e => {
   const buttonClicked = $(e.target).closest('.btn-calc')[0];
+  console.log(buttonClicked);
+  console.log(e);
+  dom.printCurrentTotal(1);
   if ($(buttonClicked).hasClass('btn-number')) {
     clickedNumber(e);
   } else if ($(buttonClicked).hasClass('btn-math')) {
