@@ -20,8 +20,10 @@ const clickedMath = e => {
       dataGatekeeper.setOperator('-');
     } else if (buttonClicked === 'math-multiply') {
       dataGatekeeper.setOperator('*');
-    } else {
+    } else if (buttonClicked === 'math-divide') {
       dataGatekeeper.setOperator('/');
+    } else {
+      // TO DO: decimal point
     }
     dataGatekeeper.setOldNumber(dataGatekeeper.getNewNumber());
     dataGatekeeper.resetNewNumber();
@@ -49,9 +51,9 @@ const clickedEquals = e => {
   const a = dataGatekeeper.getOldNumber();
   const b = dataGatekeeper.getNewNumber();
   const operator = dataGatekeeper.getOperator();
-  const calculatedTotal = dataGatekeeper.manipulateTotal(a, b, operator);
-  dataGatekeeper.setTotal(calculatedTotal);
-  console.log(calculatedTotal);
+  dataGatekeeper.manipulateTotal(a, b, operator);
+  const calculatedTotal = dataGatekeeper.getTotal();
+  console.log('calculated total: ', calculatedTotal);
   return calculatedTotal;
 };
 
