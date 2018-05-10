@@ -1,31 +1,43 @@
+const dataGatekeeper = require('./dataGatekeeper');
+
 // Begin NUMBER functionality
 const clickedNumber = e => {
-  const buttonClicked = e.target.id * 1;
+  const buttonClicked = e.target.id;
+  dataGatekeeper.setNewNumber(buttonClicked);
+  console.log('new', dataGatekeeper.getNewNumber());
+  console.log('old', dataGatekeeper.getOldNumber());
 };
 
 // Begin MATH functionality
 const clickedMath = e => {
   const buttonClicked = e.target.id;
-  if (buttonClicked === 'math-plus') {
-
-  } else if (buttonClicked === 'math-minus') {
-
-  } else if (buttonClicked === 'math-multiply') {
-
+  if (dataGatekeeper.getOldNumber * 1 === 0) {
+    alert('You need to enter a number first.');
   } else {
+    if (buttonClicked === 'math-plus') {
+      dataGatekeeper.setOperator('+');
+    } else if (buttonClicked === 'math-minus') {
+      dataGatekeeper.setOperator('-');
+    } else if (buttonClicked === 'math-multiply') {
+      dataGatekeeper.setOperator('*');
+    } else if (buttonClicked === 'math-divide') {
+      dataGatekeeper.setOperator('/');
+    } else {
+      // TO DO: decimal point
+    }
+    dataGatekeeper.setOldNumber(dataGatekeeper.getNewNumber());
+    dataGatekeeper.resetNewNumber();
+  } // end else to perform math
 
-  }
 };
 
 // Begin CLEAR functionality
 const clearSingle = () => {
 
 };
-
 const clearAll = () => {
 
 };
-
 const clickedClear = e => {
   const buttonClicked = e.target.id;
   if (buttonClicked === 'clear-single') {
@@ -33,6 +45,16 @@ const clickedClear = e => {
   } else {
     clearAll();
   }
+};
+
+const clickedEquals = e => {
+  const a = dataGatekeeper.getOldNumber();
+  const b = dataGatekeeper.getNewNumber();
+  const operator = dataGatekeeper.getOperator();
+  dataGatekeeper.manipulateTotal(a, b, operator);
+  const calculatedTotal = dataGatekeeper.getTotal();
+  console.log('calculated total: ', calculatedTotal);
+  return calculatedTotal;
 };
 
 const btnClicked = e => {
@@ -43,6 +65,8 @@ const btnClicked = e => {
     clickedMath(e);
   } else if ($(buttonClicked).hasClass('btn-clear')) {
     clickedClear(e);
+  } else if ($(buttonClicked).hasClass('btn-equals')) {
+    clickedEquals(e);
   }
 };
 
