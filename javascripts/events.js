@@ -1,12 +1,11 @@
 const dataGatekeeper = require('./dataGatekeeper');
 const dom = require('./dom');
+let buttonClicked = '';
 
 // Begin NUMBER functionality
 const clickedNumber = e => {
   const buttonClicked = e.target.id;
   dataGatekeeper.setNewNumber(buttonClicked);
-  console.log('new', dataGatekeeper.getNewNumber());
-  console.log('old', dataGatekeeper.getOldNumber());
 };
 
 // Begin MATH functionality
@@ -53,14 +52,17 @@ const clickedEquals = e => {
   const b = dataGatekeeper.getNewNumber();
   const operator = dataGatekeeper.getOperator();
   dataGatekeeper.manipulateTotal(a, b, operator);
+
   const calculatedTotal = dataGatekeeper.getTotal();
   dom.printCurrentTotal(calculatedTotal);
-  console.log('calculated total: ', calculatedTotal);
+  dom.printRunningTotal(calculatedTotal);
   return calculatedTotal;
 };
 
 const btnClicked = e => {
-  const buttonClicked = $(e.target).closest('.btn-calc')[0];
+  $(buttonClicked).removeClass('button-clicked');
+  buttonClicked = $(e.target).closest('.btn-calc')[0];
+  $(buttonClicked).addClass('button-clicked');
   dom.printCurrentTotal(e.target.innerHTML);
   dom.printRunningTotal(e.target.innerHTML);
   if ($(buttonClicked).hasClass('btn-number')) {

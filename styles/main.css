@@ -1,5 +1,6 @@
 * {
   font-family: 'Share Tech Mono', monospace;
+  box-sizing: border-box;
 }
 
 body {
@@ -18,7 +19,8 @@ button {
   padding: 15px 15px;
 }
 
-.btn-number {
+.btn-number,
+.btn-decimal {
   font-size: 36px;
 }
 .btn-math {
@@ -32,7 +34,7 @@ button {
 }
 .btn-equals {
   font-size: 36px;
-  background-color: red;
+  background-color: lightsteelblue;
 }
 
 #div-current-total,
@@ -42,4 +44,13 @@ button {
   border: 1px solid black;
   margin-bottom: 10px;
   padding: 10px 10px;
+}
+
+button:focus {
+  outline: none;
+}
+
+.button-clicked {
+  background-color: lightgrey;
+  border: 1px solid grey;
 }
