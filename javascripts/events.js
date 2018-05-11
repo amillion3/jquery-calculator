@@ -54,15 +54,15 @@ const clickedEquals = e => {
   const operator = dataGatekeeper.getOperator();
   dataGatekeeper.manipulateTotal(a, b, operator);
   const calculatedTotal = dataGatekeeper.getTotal();
+  dom.printCurrentTotal(calculatedTotal);
   console.log('calculated total: ', calculatedTotal);
   return calculatedTotal;
 };
 
 const btnClicked = e => {
   const buttonClicked = $(e.target).closest('.btn-calc')[0];
-  console.log(buttonClicked);
-  console.log(e);
-  dom.printCurrentTotal(1);
+  dom.printCurrentTotal(e.target.innerHTML);
+  dom.printRunningTotal(e.target.innerHTML);
   if ($(buttonClicked).hasClass('btn-number')) {
     clickedNumber(e);
   } else if ($(buttonClicked).hasClass('btn-math')) {

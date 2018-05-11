@@ -7,11 +7,16 @@
 //   b. add a 'well' class when a button is clicked instead
 
 const printCurrentTotal = input => {
-  $('div-current-total').html(input);
+  $('#div-current-total').text('');
+  $('#div-current-total').text(input);
 };
 
 const printRunningTotal = input => {
-  $('div-running-display').html(input);
+  const currentOutput = $('#div-running-display').text();
+  if (currentOutput === 'Running Total') {
+    $('#div-running-display').text('');
+  }
+  $('#div-running-display').append(input);
 };
 
 module.exports = {
