@@ -11,7 +11,12 @@ const printRunningTotal = input => {
   $('#div-running-display').append(input);
 };
 
+const resetRunningTotal = input => {
+  $('#div-running-display').text(input);
+};
+
 module.exports = {
   printCurrentTotal,
   printRunningTotal,
+  resetRunningTotal,
 };

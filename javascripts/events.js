@@ -1,5 +1,6 @@
 const dataGatekeeper = require('./dataGatekeeper');
 const dom = require('./dom');
+
 let buttonClicked = '';
 
 // Begin NUMBER functionality
@@ -36,6 +37,10 @@ const clearSingle = () => {
 
 };
 const clearAll = () => {
+  dataGatekeeper.resetNewNumber();
+  dataGatekeeper.resetOldNumber();
+  dom.printCurrentTotal(0);
+  dom.resetRunningTotal(0);
 
 };
 const clickedClear = e => {
