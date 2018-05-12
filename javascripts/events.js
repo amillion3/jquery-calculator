@@ -6,7 +6,13 @@ let buttonClicked = '';
 // Begin NUMBER functionality
 const clickedNumber = e => {
   const buttonClicked = e.target.id;
-  dataGatekeeper.setNewNumber(buttonClicked);
+  if (typeof(buttonClicked) === 'number') {
+    dataGatekeeper.setSecondNumber(buttonClicked);
+  } else {
+    dataGatekeeper.setFirstNumber(buttonClicked);
+    dataGatekeeper.buildNewCalcObject(a, b);
+    dataGatekeeper.resetTempValues();
+  }
 };
 
 // Begin MATH functionality
@@ -38,7 +44,7 @@ const clearSingle = () => {
 };
 const clearAll = () => {
   dataGatekeeper.resetNewNumber();
-  dataGatekeeper.resetOldNumber();
+  dataGatekeeper.resetOldNumbers();
   dom.printCurrentTotal(0);
   dom.resetRunningTotal(0);
 
@@ -56,7 +62,7 @@ const clickedEquals = e => {
   const a = dataGatekeeper.getOldNumber();
   const b = dataGatekeeper.getNewNumber();
   const operator = dataGatekeeper.getOperator();
-  dataGatekeeper.manipulateTotal(a, b, operator);
+  dataGatekeeper.buildNewCalcObject(a, b, operator);
 
   const calculatedTotal = dataGatekeeper.getTotal();
   dom.printCurrentTotal(calculatedTotal);
