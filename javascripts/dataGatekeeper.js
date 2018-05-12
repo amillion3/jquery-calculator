@@ -1,4 +1,4 @@
-let operator = '';
+let operator = 0;
 let firstNumber = ''; // AKA 'a' in operators object
 let secondNumber = ''; // AKA 'b' in operators object
 const calculations = [];
@@ -35,18 +35,19 @@ const isDecimal = () => {
   return testValues;
 };
 
+const getOperator = () =>  operator;
 const setOperator = input => { operator = input; };
 
 const getFirstNumber = () => firstNumber;
-const setFirstNumber = a => { firstNumber = a; };
+const setFirstNumber = a => { firstNumber += a; };
 
 const getSecondNumber = () => secondNumber;
-const setSecondNumber = a => { secondNumber = a; };
+const setSecondNumber = a => { secondNumber += a; };
 
 const resetTempValues = () => {
   firstNumber = '';
   secondNumber = '';
-  operator = '';
+  operator = 0;
 };
 
 const getLastTotal = () => calculations[calculations.length - 1];
@@ -58,6 +59,7 @@ const buildNewCalcObject = (a, b) => {
 };
 
 module.exports = {
+  getOperator,
   setOperator,
   getFirstNumber,
   setFirstNumber,

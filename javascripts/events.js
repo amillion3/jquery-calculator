@@ -4,9 +4,22 @@ const dom = require('./dom');
 let buttonClicked = '';
 
 // Begin NUMBER functionality
+
+const checkForDecimals = () => {
+  const testValues = dataGatekeeper.getOperator();
+  if (testValues[0] === 0 && dataGatekeeper.getOperator() !== 'number') {
+    dataGatekeeper.setFirstNumber('.');
+  } else if (testValues[0] ===  0 && dataGatekeeper.getOperator() !== 'number') {
+    dataGatekeeper.setSecondNumber('.');
+  }
+};
+
 const clickedNumber = e => {
   const buttonClicked = e.target.id;
-  if (typeof(dataGatekeeper.getFirstNumber()) === 'number') {
+  if (buttonClicked === '.') {
+    checkForDecimals();
+  }
+  else if (typeof(dataGatekeeper.getFirstNumber()) === 'number' && (dataGatekeeper.getOperator() === 'number')) {
     dataGatekeeper.setSecondNumber(buttonClicked);
     const a = dataGatekeeper.getFirstNumber();
     const b = dataGatekeeper.getSecondNumber();
@@ -20,7 +33,8 @@ const clickedNumber = e => {
 // Begin MATH functionality
 const clickedMath = e => {
   const buttonClicked = e.target.id;
-  if (typeof(dataGatekeeper.getFirstNumber) !== 'number') {
+  console.log(dataGatekeeper.getFirstNumber());
+  if (dataGatekeeper.getFirstNumber() === '') {
     alert('You need to enter a number first.');
   } else {
     if (buttonClicked === 'math-plus') {
@@ -75,8 +89,8 @@ const btnClicked = e => {
   $(buttonClicked).removeClass('button-clicked');
   buttonClicked = $(e.target).closest('.btn-calc')[0];
   $(buttonClicked).addClass('button-clicked');
-  dom.printCurrentTotal(e.target.innerHTML);
-  dom.printRunningTotal(e.target.innerHTML);
+  let clickedValue = e.target.innerHTML;
+
   if ($(buttonClicked).hasClass('btn-number')) {
     clickedNumber(e);
   } else if ($(buttonClicked).hasClass('btn-math')) {
@@ -85,7 +99,13 @@ const btnClicked = e => {
     clickedClear(e);
   } else if ($(buttonClicked).hasClass('btn-equals')) {
     clickedEquals(e);
+  } else if ($(buttonClicked).hasClass('btn-decimal')) {
+    clickedNumber(e);
+    clickedValue = 'Please enter a value';
+    // resume here
   }
+  dom.printCurrentTotal(clickedValue);
+  dom.printRunningTotal(clickedValue);
 };
 
 const bindEvents = () => {
