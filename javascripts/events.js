@@ -6,19 +6,21 @@ let buttonClicked = '';
 // Begin NUMBER functionality
 const clickedNumber = e => {
   const buttonClicked = e.target.id;
-  if (typeof(buttonClicked) === 'number') {
+  if (typeof(dataGatekeeper.getFirstNumber()) === 'number') {
     dataGatekeeper.setSecondNumber(buttonClicked);
-  } else {
-    dataGatekeeper.setFirstNumber(buttonClicked);
+    const a = dataGatekeeper.getFirstNumber();
+    const b = dataGatekeeper.getSecondNumber();
     dataGatekeeper.buildNewCalcObject(a, b);
     dataGatekeeper.resetTempValues();
+  } else {
+    dataGatekeeper.setFirstNumber(buttonClicked);
   }
 };
 
 // Begin MATH functionality
 const clickedMath = e => {
   const buttonClicked = e.target.id;
-  if (dataGatekeeper.getOldNumber * 1 === 0) {
+  if (typeof(dataGatekeeper.getFirstNumber) !== 'number') {
     alert('You need to enter a number first.');
   } else {
     if (buttonClicked === 'math-plus') {
@@ -29,11 +31,10 @@ const clickedMath = e => {
       dataGatekeeper.setOperator('*');
     } else if (buttonClicked === 'math-divide') {
       dataGatekeeper.setOperator('/');
-    } else {
+    } else if (buttonClicked === 'math-decimal') {
       // TO DO: decimal point
     }
-    dataGatekeeper.setOldNumber(dataGatekeeper.getNewNumber());
-    dataGatekeeper.resetNewNumber();
+    dataGatekeeper.resetTempValues();
   } // end else to perform math
 
 };

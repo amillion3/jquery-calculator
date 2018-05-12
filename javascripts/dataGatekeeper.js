@@ -18,6 +18,25 @@ class PairOfData {
   }
 }
 
+const isDecimal = () => {
+  const num1 = getFirstNumber();
+  const num2 = getSecondNumber();
+  const testValues = [];
+  if (num1.contains('.')) {
+    testValues.push(1);
+  } else {
+    testValues.push(0);
+  }
+  if (num2.contains('.')) {
+    testValues.push(1);
+  } else {
+    testValues.push(0);
+  }
+  return testValues;
+};
+
+const setOperator = input => { operator = input; };
+
 const getFirstNumber = () => firstNumber;
 const setFirstNumber = a => { firstNumber = a; };
 
@@ -34,17 +53,18 @@ const getLastTotal = () => calculations[calculations.length - 1];
 
 const buildNewCalcObject = (a, b) => {
   const total = operators[operator](a, b);
-  calculations.push(new PairOfData(a, b, inputOperation, total));
+  calculations.push(new PairOfData(a, b, operator, total));
   console.log(calculations[calculations.length - 1]);
 };
 
 module.exports = {
+  setOperator,
   getFirstNumber,
   setFirstNumber,
-  resetFirstNumber,
   getSecondNumber,
-  getSecondNumber,
-  resetSecondNumber,
+  setSecondNumber,
+  resetTempValues,
   getLastTotal,
   buildNewCalcObject,
+  isDecimal,
 };
