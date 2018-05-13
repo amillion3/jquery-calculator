@@ -53,9 +53,13 @@ const resetTempValues = () => {
 const getLastTotal = () => calculations[calculations.length - 1];
 
 const buildNewCalcObject = (a, b) => {
+  console.log('a', a);
+  console.log('b', b);
+  console.log('operator', operator);
   const total = operators[operator](a, b);
   calculations.push(new PairOfData(a, b, operator, total));
   console.log(calculations[calculations.length - 1]);
+  return calculations[calculations.length - 1];
 };
 
 module.exports = {

@@ -16,10 +16,14 @@ const checkForDecimals = () => {
 
 const clickedNumber = e => {
   const buttonClicked = e.target.id;
+  console.log('clickNumber 1st', dataGatekeeper.getFirstNumber());
+  console.log('clickNumber 1st', typeof(dataGatekeeper.getFirstNumber()));
+  console.log('clickNumber 2nd', dataGatekeeper.getSecondNumber());
+  console.log('clickNumber 2nd', typeof(dataGatekeeper.getSecondNumber()));
   if (buttonClicked === '.') {
     checkForDecimals();
   }
-  else if (typeof(dataGatekeeper.getFirstNumber()) === 'number' && (dataGatekeeper.getOperator() === 'number')) {
+  else if (typeof(dataGatekeeper.getFirstNumber()) === 'string' && (dataGatekeeper.getOperator() !== 'number')) {
     dataGatekeeper.setSecondNumber(buttonClicked);
     const a = dataGatekeeper.getFirstNumber();
     const b = dataGatekeeper.getSecondNumber();
@@ -74,12 +78,9 @@ const clickedClear = e => {
 };
 
 const clickedEquals = e => {
-  const a = dataGatekeeper.getOldNumber();
-  const b = dataGatekeeper.getNewNumber();
-  const operator = dataGatekeeper.getOperator();
-  dataGatekeeper.buildNewCalcObject(a, b, operator);
-
-  const calculatedTotal = dataGatekeeper.getTotal();
+  console.log('1st', dataGatekeeper.getFirstNumber());
+  console.log('2nd', dataGatekeeper.getSecondNumber());
+  const calculatedTotal = dataGatekeeper.getLastTotal();
   dom.printCurrentTotal(calculatedTotal);
   dom.printRunningTotal(calculatedTotal);
   return calculatedTotal;
