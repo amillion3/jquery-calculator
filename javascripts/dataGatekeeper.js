@@ -57,11 +57,9 @@ const getLastTotal = () => calculations[calculations.length - 1].total;
 
 const buildNewCalcObject = () => {
   const total = operators[operator](firstNumber * 1, secondNumber * 1);
-  console.log(total);
   calculations.push(new PairOfData(firstNumber, secondNumber, operator, total));
   resetTempValues();
   setFirstNumber(total);
-  console.log(calculations);
   return calculations[calculations.length - 1];
 };
 
