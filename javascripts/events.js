@@ -4,15 +4,43 @@ const dom = require('./dom');
 let buttonClicked = '';
 
 // Begin NUMBER functionality
+
+const checkForDecimals = () => {
+  const testValues = dataGatekeeper.isDecimal();
+  if (testValues[0] === 0 && dataGatekeeper.getOperator() !== 'number') {
+    dataGatekeeper.setFirstNumber('.');
+  } else if (testValues[1] ===  0 && dataGatekeeper.getOperator() !== 'number') {
+    dataGatekeeper.setSecondNumber('.');
+  }
+};
+
 const clickedNumber = e => {
   const buttonClicked = e.target.id;
-  dataGatekeeper.setNewNumber(buttonClicked);
+  if (buttonClicked === 'math-decimal') {
+    checkForDecimals();
+  }
+  else if (dataGatekeeper.getOperator() === 0) {
+    dataGatekeeper.setFirstNumber(buttonClicked);
+  } else {
+    dataGatekeeper.setSecondNumber(buttonClicked);
+  }
 };
 
 // Begin MATH functionality
+const canCalculateOperation = () => {
+  const a = dataGatekeeper.getFirstNumber();
+  const b = dataGatekeeper.getSecondNumber();
+  if (a.length > 0 && b.length > 0) {
+    return true;
+  } else {
+    alert('You need to enter a math operator and/or another number.');
+    return false;
+  }
+};
+
 const clickedMath = e => {
   const buttonClicked = e.target.id;
-  if (dataGatekeeper.getOldNumber * 1 === 0) {
+  if (dataGatekeeper.getFirstNumber() === '') {
     alert('You need to enter a number first.');
   } else {
     if (buttonClicked === 'math-plus') {
@@ -23,11 +51,17 @@ const clickedMath = e => {
       dataGatekeeper.setOperator('*');
     } else if (buttonClicked === 'math-divide') {
       dataGatekeeper.setOperator('/');
-    } else {
+    } else if (buttonClicked === 'math-decimal') {
       // TO DO: decimal point
     }
-    dataGatekeeper.setOldNumber(dataGatekeeper.getNewNumber());
-    dataGatekeeper.resetNewNumber();
+
+    if (dataGatekeeper.getSecondNumber() !== '') {
+      dataGatekeeper.buildNewCalcObject();
+      const calculatedTotal = dataGatekeeper.getLastTotal();
+      dom.printCurrentTotal(calculatedTotal);
+      dom.printRunningTotal(`=`);
+      return `${calculatedTotal}`;
+    }
   } // end else to perform math
 
 };
@@ -38,7 +72,7 @@ const clearSingle = () => {
 };
 const clearAll = () => {
   dataGatekeeper.resetNewNumber();
-  dataGatekeeper.resetOldNumber();
+  dataGatekeeper.resetOldNumbers();
   dom.printCurrentTotal(0);
   dom.resetRunningTotal(0);
 
@@ -52,24 +86,23 @@ const clickedClear = e => {
   }
 };
 
-const clickedEquals = e => {
-  const a = dataGatekeeper.getOldNumber();
-  const b = dataGatekeeper.getNewNumber();
-  const operator = dataGatekeeper.getOperator();
-  dataGatekeeper.manipulateTotal(a, b, operator);
-
-  const calculatedTotal = dataGatekeeper.getTotal();
-  dom.printCurrentTotal(calculatedTotal);
-  dom.printRunningTotal(calculatedTotal);
-  return calculatedTotal;
+const clickedEquals = () => {
+  if (canCalculateOperation() === true) {
+    dataGatekeeper.buildNewCalcObject();
+    const calculatedTotal = dataGatekeeper.getLastTotal();
+    dom.printCurrentTotal(calculatedTotal);
+    dom.printRunningTotal(`=`);
+    return `${calculatedTotal}`;
+  }
+  else { return ''; }
 };
 
 const btnClicked = e => {
   $(buttonClicked).removeClass('button-clicked');
   buttonClicked = $(e.target).closest('.btn-calc')[0];
   $(buttonClicked).addClass('button-clicked');
-  dom.printCurrentTotal(e.target.innerHTML);
-  dom.printRunningTotal(e.target.innerHTML);
+  let clickedValue = e.target.innerHTML;
+
   if ($(buttonClicked).hasClass('btn-number')) {
     clickedNumber(e);
   } else if ($(buttonClicked).hasClass('btn-math')) {
@@ -77,8 +110,15 @@ const btnClicked = e => {
   } else if ($(buttonClicked).hasClass('btn-clear')) {
     clickedClear(e);
   } else if ($(buttonClicked).hasClass('btn-equals')) {
-    clickedEquals(e);
+    const total = clickedEquals();
+    clickedValue = total;
+  } else if ($(buttonClicked).hasClass('btn-decimal')) {
+    clickedNumber(e);
+    clickedValue = 'Please enter a value';
+    // resume here
   }
+  dom.printCurrentTotal(clickedValue);
+  dom.printRunningTotal(clickedValue);
 };
 
 const bindEvents = () => {

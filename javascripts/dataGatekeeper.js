@@ -1,7 +1,7 @@
-let currentTotal = 0;
-let operator = '';
-let oldNumber = 0; // AKA 'a' in operators object
-let newNumber = 0; // AKA 'b' in operators object
+let operator = 0;
+let firstNumber = ''; // AKA 'a' in operators object
+let secondNumber = ''; // AKA 'b' in operators object
+const calculations = [];
 const operators = {
   '+': (a, b) => a + b,
   '-': (a, b) => a - b,
@@ -9,36 +9,69 @@ const operators = {
   '/': (a, b) => a / b,
 };
 
-const getOperator = () => operator;
-const setOperator = op => { operator = op; };
+class PairOfData {
+  constructor (num1, num2, operator, total) {
+    this.num1 = num1;
+    this.num2 = num2;
+    this.operator = operator;
+    this.total = total;
+  }
+}
 
-const getOldNumber = () => oldNumber * 1;
-const setOldNumber = a => { oldNumber = a; };
-const resetOldNumber = () => { oldNumber = ''; };
+const isDecimal = () => {
+  const num1 = getFirstNumber();
+  const num2 = getSecondNumber();
+  const testValues = [];
+  if (num1.includes('.')) {
+    testValues.push(1);
+    alert('Only one decimal point is allowed.');
+  } else {
+    testValues.push(0);
+  }
+  if (num2.includes('.')) {
+    testValues.push(1);
+    alert('Only one decimal point is allowed.');
+  } else {
+    testValues.push(0);
+  }
+  return testValues;
+};
 
-const getNewNumber = () => newNumber * 1;
-const setNewNumber = b => { newNumber += b; };
-const resetNewNumber = () => { newNumber = ''; };
+const getOperator = () =>  operator;
+const setOperator = input => { operator = input; };
 
-const getTotal = () => currentTotal;
-const setTotal = total => { currentTotal = total; };
+const getFirstNumber = () => firstNumber;
+const setFirstNumber = a => { firstNumber += a; };
 
-const manipulateTotal = (a, b, inputOperation) => {
-  setTotal(operators[inputOperation](a, b));
-  resetNewNumber();
-  resetOldNumber();
+const getSecondNumber = () => secondNumber;
+const setSecondNumber = a => { secondNumber += a; };
+
+const resetTempValues = () => {
+  operator = 0;
+  firstNumber = '';
+  secondNumber = '';
+
+};
+
+const getLastTotal = () => calculations[calculations.length - 1].total;
+
+const buildNewCalcObject = () => {
+  const total = operators[operator](firstNumber * 1, secondNumber * 1);
+  calculations.push(new PairOfData(firstNumber, secondNumber, operator, total));
+  resetTempValues();
+  setFirstNumber(total);
+  return calculations[calculations.length - 1];
 };
 
 module.exports = {
   getOperator,
   setOperator,
-  getOldNumber,
-  setOldNumber,
-  resetOldNumber,
-  getNewNumber,
-  setNewNumber,
-  resetNewNumber,
-  getTotal,
-  setTotal,
-  manipulateTotal,
+  getFirstNumber,
+  setFirstNumber,
+  getSecondNumber,
+  setSecondNumber,
+  resetTempValues,
+  getLastTotal,
+  buildNewCalcObject,
+  isDecimal,
 };
