@@ -22,13 +22,15 @@ const isDecimal = () => {
   const num1 = getFirstNumber();
   const num2 = getSecondNumber();
   const testValues = [];
-  if (num1.contains('.')) {
+  if (num1.includes('.')) {
     testValues.push(1);
+    alert('Only one decimal point is allowed.');
   } else {
     testValues.push(0);
   }
-  if (num2.contains('.')) {
+  if (num2.includes('.')) {
     testValues.push(1);
+    alert('Only one decimal point is allowed.');
   } else {
     testValues.push(0);
   }
@@ -45,20 +47,18 @@ const getSecondNumber = () => secondNumber;
 const setSecondNumber = a => { secondNumber += a; };
 
 const resetTempValues = () => {
+  operator = 0;
   firstNumber = '';
   secondNumber = '';
-  operator = 0;
+
 };
 
-const getLastTotal = () => calculations[calculations.length - 1];
+const getLastTotal = () => calculations[calculations.length - 1].total;
 
-const buildNewCalcObject = (a, b) => {
-  console.log('a', a);
-  console.log('b', b);
-  console.log('operator', operator);
-  const total = operators[operator](a, b);
-  calculations.push(new PairOfData(a, b, operator, total));
-  console.log(calculations[calculations.length - 1]);
+const buildNewCalcObject = () => {
+  const total = operators[operator](firstNumber * 1, secondNumber * 1);
+  calculations.push(new PairOfData(firstNumber, secondNumber, operator, total));
+  resetTempValues();
   return calculations[calculations.length - 1];
 };
 

@@ -6,38 +6,46 @@ let buttonClicked = '';
 // Begin NUMBER functionality
 
 const checkForDecimals = () => {
-  const testValues = dataGatekeeper.getOperator();
+  const testValues = dataGatekeeper.isDecimal();
   if (testValues[0] === 0 && dataGatekeeper.getOperator() !== 'number') {
     dataGatekeeper.setFirstNumber('.');
-  } else if (testValues[0] ===  0 && dataGatekeeper.getOperator() !== 'number') {
+  } else if (testValues[1] ===  0 && dataGatekeeper.getOperator() !== 'number') {
     dataGatekeeper.setSecondNumber('.');
   }
 };
 
 const clickedNumber = e => {
   const buttonClicked = e.target.id;
-  console.log('clickNumber 1st', dataGatekeeper.getFirstNumber());
-  console.log('clickNumber 1st', typeof(dataGatekeeper.getFirstNumber()));
-  console.log('clickNumber 2nd', dataGatekeeper.getSecondNumber());
-  console.log('clickNumber 2nd', typeof(dataGatekeeper.getSecondNumber()));
-  if (buttonClicked === '.') {
+  if (buttonClicked === 'math-decimal') {
     checkForDecimals();
   }
-  else if (typeof(dataGatekeeper.getFirstNumber()) === 'string' && (dataGatekeeper.getOperator() !== 'number')) {
-    dataGatekeeper.setSecondNumber(buttonClicked);
-    const a = dataGatekeeper.getFirstNumber();
-    const b = dataGatekeeper.getSecondNumber();
-    dataGatekeeper.buildNewCalcObject(a, b);
-    dataGatekeeper.resetTempValues();
-  } else {
+  else if (dataGatekeeper.getOperator() === 0) {
     dataGatekeeper.setFirstNumber(buttonClicked);
+  } else {
+    dataGatekeeper.setSecondNumber(buttonClicked);
   }
+  console.log(dataGatekeeper.getOperator());
+  // console.log('button clicked', buttonClicked);
+  // console.log('clickNumber 1st', dataGatekeeper.getFirstNumber());
+  // console.log('clickNumber 1st', typeof(dataGatekeeper.getFirstNumber()));
+  // console.log('clickNumber 2nd', dataGatekeeper.getSecondNumber());
+  // console.log('clickNumber 2nd', typeof(dataGatekeeper.getSecondNumber()));
 };
 
 // Begin MATH functionality
+const canCalculateOperation = () => {
+  const a = dataGatekeeper.getFirstNumber();
+  const b = dataGatekeeper.getSecondNumber();
+  if (a.length > 0 && b.length > 0) {
+    return true;
+  } else {
+    alert('You need to enter a math operator and/or another number.');
+    return false;
+  }
+};
+
 const clickedMath = e => {
   const buttonClicked = e.target.id;
-  console.log(dataGatekeeper.getFirstNumber());
   if (dataGatekeeper.getFirstNumber() === '') {
     alert('You need to enter a number first.');
   } else {
@@ -52,7 +60,6 @@ const clickedMath = e => {
     } else if (buttonClicked === 'math-decimal') {
       // TO DO: decimal point
     }
-    dataGatekeeper.resetTempValues();
   } // end else to perform math
 
 };
@@ -78,12 +85,14 @@ const clickedClear = e => {
 };
 
 const clickedEquals = e => {
-  console.log('1st', dataGatekeeper.getFirstNumber());
-  console.log('2nd', dataGatekeeper.getSecondNumber());
-  const calculatedTotal = dataGatekeeper.getLastTotal();
-  dom.printCurrentTotal(calculatedTotal);
-  dom.printRunningTotal(calculatedTotal);
-  return calculatedTotal;
+  if (canCalculateOperation() === true) {
+    dataGatekeeper.buildNewCalcObject();
+    const calculatedTotal = dataGatekeeper.getLastTotal();
+    dom.printCurrentTotal(calculatedTotal);
+    dom.printRunningTotal(`=`);
+    return `${calculatedTotal}`;
+  }
+  else { return ''; }
 };
 
 const btnClicked = e => {
@@ -99,7 +108,8 @@ const btnClicked = e => {
   } else if ($(buttonClicked).hasClass('btn-clear')) {
     clickedClear(e);
   } else if ($(buttonClicked).hasClass('btn-equals')) {
-    clickedEquals(e);
+    const total = clickedEquals(e);
+    clickedValue = total;
   } else if ($(buttonClicked).hasClass('btn-decimal')) {
     clickedNumber(e);
     clickedValue = 'Please enter a value';
