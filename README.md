@@ -1,5 +1,7 @@
 # jQuery Calculator
 
+### [Live Demo](https://jquery-calculator.firebaseapp.com/)
+
 ## The goal of building this calculator was to continue working with jQuery and manipulating the DOM. As well, the logic behind building a calculator is quite complex and took some work to figure out. In the end, the user is able to string multiple operations together. However, the calculator is not smart enough to factor in [order of operations](https://en.wikipedia.org/wiki/Order_of_operations).
 
 ## Technology
